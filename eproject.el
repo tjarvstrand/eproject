@@ -710,12 +710,6 @@ that FILE is an absolute path."
   "Return a list of project names known to eproject."
   (mapcar #'car (eproject-projects)))
 
-;; Finish up
-(defun eproject--after-change-major-mode-hook ()
-  (when (and (buffer-file-name)
-             (not eproject-root))
-    (eproject-maybe-turn-on)))
-
 (defun eproject--after-save-hook ()
   ;; TODO: perhaps check against relevant-files or irrelevant-files
   ;; regex?  I'm avoiding this now because I'd rather not force the
@@ -726,7 +720,6 @@ that FILE is an absolute path."
 
 (add-hook 'find-file-hook #'eproject-maybe-turn-on)
 (add-hook 'dired-mode-hook #'eproject-maybe-turn-on)
-(add-hook 'after-change-major-mode-hook #'eproject--after-change-major-mode-hook)
 (add-hook 'after-save-hook #'eproject--after-save-hook)
 
 (add-hook 'eproject-project-change-hook #'eproject--maybe-reinitialize)
